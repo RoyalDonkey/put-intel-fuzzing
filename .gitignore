@@ -1,3 +1,4 @@
+/llvm-project/
 *.o
 *.so
 bad
