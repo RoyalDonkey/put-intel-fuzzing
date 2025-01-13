@@ -1,0 +1,61 @@
+\documentclass[14pt]{article}
+
+% Basic packages
+\usepackage{extsizes}
+\usepackage[quiet]{fontspec}
+\usepackage{unicode-math}
+\usepackage[margin=2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{fancyhdr, lastpage}
+\usepackage{multirow, multicol}
+\usepackage{longtable}
+\usepackage{siunitx}
+\usepackage{amsmath, amssymb}
+\usepackage{soul}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{minted}
+
+% Font config
+\defaultfontfeatures{Scale=MatchUppercase}
+\setmainfont{Libertinus Serif}
+\setsansfont{Carlito}
+\setmonofont{DejaVu Sans Mono}
+\setmathfont{Libertinus Math}
+\setul{1pt}{.4pt}
+
+% Page layout config
+\let\OLDTITLE\title
+\renewcommand{\title}[1]{\OLDTITLE{#1}\newcommand{\thetitle}{#1}}
+\pagestyle{fancy}
+\lhead{\thetitle}
+\cfoot{Page \thepage\ of \pageref{LastPage}}
+
+% Hyperref config
+\hypersetup{colorlinks=true, urlcolor=blue}
+\urlstyle{same}
+
+% Minted config
+\renewcommand{\theFancyVerbLine}{\sffamily
+\textcolor[rgb]{0.4,0.4,0.4}{\small \arabic{FancyVerbLine}}}
+\setminted{linenos,autogobble,obeytabs,frame=single,highlightcolor=yellow}
+\renewcommand{\listingscaption}{Source}
+
+\title{Projekt wdrożeniowy -- Intel Simics fuzz testing w RISC-V}
+\author{
+	Tomasz Jaworski\\ \href{mailto:tomasz.jaworski@student.put.poznan.pl}{\small <tomasz.jaworski@student.put.poznan.pl>}
+	\and Piotr Kaszubski\\ \href{mailto:piotr.kaszubski@student.put.poznan.pl}{\small <piotr.kaszubski@student.put.poznan.pl>}
+	\and Karol Kiedrowski\\ \href{mailto:karol.kiedrowski@student.put.poznan.pl}{\small <karol.kiedrowski@student.put.poznan.pl>}
+	\and Mikołaj Załęski\\ \href{mailto:mikolaj.zaleski@student.put.poznan.pl}{\small <mikolaj.zaleski@student.put.poznan.pl}
+	\and Adam Andruszak\\ \href{mailto:adam.andruszak@intel.com}{\small <adam.andruszak@intel.com>}
+}
+\date{Styczeń 2025}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Cel projektu}
+Intel Simics to emulator oprogramowania przeznaczonego do systemów wbudowanych.
+% TODO
+\end{document}
