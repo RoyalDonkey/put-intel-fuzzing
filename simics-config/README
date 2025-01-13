@@ -1,0 +1,11 @@
+1. Plik risc-v-simple.dts należy przekopiować do targetu w folderze:
+.../simics/simics-risc-v-simple-7.6.0/targets/risc-v-simple
+
+2. Przekompilować .dtb
+dtc -O dtb -o risc-v-simple.dtb risc-v-simple.dts
+
+3. Zmapować urządzenie w simics:
+
+run-command-file "map_memory.simics"
+
+4. Teraz można uruchomić system

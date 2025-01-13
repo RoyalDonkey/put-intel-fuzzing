@@ -1,0 +1,167 @@
+/dts-v1/;
+
+/ {
+    #address-cells = <0x02>;
+    #size-cells = <0x02>;
+    compatible = "simics,risc-v-simple";
+    model = "simics,risc-v-simple";
+
+    cpus {
+        #address-cells = <0x01>;
+        #size-cells = <0x00>;
+        timebase-frequency = <0xf4240>;
+
+        cpu@0 {
+            device_type = "cpu";
+            reg = <0x00>;
+            status = "okay";
+            compatible = "riscv";
+            riscv,isa = "rv64imafdc";
+            mmu-type = "riscv,sv39";
+            clock-frequency = <0x5f5e100>;
+
+            cpu0_intc: interrupt-controller {
+                #address-cells = <0x1>;
+                #interrupt-cells = <0x01>;
+                interrupt-controller;
+                compatible = "riscv,cpu-intc";
+            };
+        };
+        cpu@1 {
+            device_type = "cpu";
+            reg = <0x01>;
+            status = "okay";
+            compatible = "riscv";
+            riscv,isa = "rv64imafdc";
+            mmu-type = "riscv,sv39";
+            clock-frequency = <0x5f5e100>;
+
+            cpu1_intc: interrupt-controller {
+                #address-cells = <0x1>;
+                #interrupt-cells = <0x01>;
+                interrupt-controller;
+                compatible = "riscv,cpu-intc";
+            };
+        };
+        cpu@2 {
+            device_type = "cpu";
+            reg = <0x02>;
+            status = "okay";
+            compatible = "riscv";
+            riscv,isa = "rv64imafdc";
+            mmu-type = "riscv,sv39";
+            clock-frequency = <0x5f5e100>;
+
+            cpu2_intc: interrupt-controller {
+                #address-cells = <0x1>;
+                #interrupt-cells = <0x01>;
+                interrupt-controller;
+                compatible = "riscv,cpu-intc";
+            };
+        };
+        cpu@3 {
+            device_type = "cpu";
+            reg = <0x03>;
+            status = "okay";
+            compatible = "riscv";
+            riscv,isa = "rv64imafdc";
+            mmu-type = "riscv,sv39";
+            clock-frequency = <0x5f5e100>;
+
+            cpu3_intc: interrupt-controller {
+                #address-cells = <0x1>;
+                #interrupt-cells = <0x01>;
+                interrupt-controller;
+                compatible = "riscv,cpu-intc";
+            };
+        };
+    };
+    clock: clock0 {
+      compatible = "fixed-clock";
+      #clock-cells = <0>;
+      clock-frequency = <100000000>;
+      clock-accuracy = <100>;
+    };
+
+    memory@80000000{
+        #address-cells = <0x02>;
+        #size-cells = <0x02>;
+        device_type = "memory";
+        reg = <0x0 0x80000000 0x0 0x80000000>;
+    };
+    soc {
+        #address-cells = <0x02>;
+        #size-cells = <0x02>;
+        compatible = "ucbbar,spike-bare-soc", "simple-bus";
+        ranges;
+
+        clint@2000000 {
+            compatible = "riscv,clint0";
+            interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>,
+                          <&cpu1_intc 3>, <&cpu1_intc 7>,
+                          <&cpu2_intc 3>, <&cpu2_intc 7>,
+                          <&cpu3_intc 3>, <&cpu3_intc 7>;
+            reg = <0x00 0x2000000 0x00 0xc000>;
+        };
+
+        plic0: interrupt-controller@c000000 {
+            #interrupt-cells = <1>;
+            compatible = "sifive,plic-1.0.0";
+            #address-cells = <0>;
+            interrupt-controller;
+            riscv,ndev = <0x7f>;
+            interrupts-extended = <&cpu0_intc 0xffffffff &cpu0_intc 9
+                          &cpu1_intc 0xffffffff &cpu1_intc 9
+                          &cpu2_intc 0xffffffff &cpu2_intc 9
+                          &cpu3_intc 0xffffffff &cpu3_intc 9>;
+            reg = <0x00 0xc000000 0x00 0x4000000>;
+        };
+        uart0: serial@10000000 {
+            compatible = "ns16550a";
+            reg = <0x0 0x10000000 0x0 0x11>;
+            interrupt-parent = <&plic0>;
+            interrupts = <1>;
+            current-speed = <115200>;
+            clocks = <&clock>;
+            status = "okay";
+            fifo-size = <0x10>;
+        };
+        virtio_net: virtio@10010000 {
+            compatible = "virtio,mmio";
+            reg = <0x0 0x10010000 0x0 0x200>;
+            interrupt-parent = <&plic0>;
+            interrupts = <2>;
+        };
+        rootfs_disk0: virtio@10020000 {
+            compatible = "virtio,mmio";
+            reg = <0x0 0x10020000 0x0 0x200>;
+            interrupt-parent = <&plic0>;
+            interrupts = <3>;
+        };
+        disk1: virtio@10030000 {
+            compatible = "virtio,mmio";
+            reg = <0x0 0x10030000 0x0 0x200>;
+            interrupt-parent = <&plic0>;
+            interrupts = <4>;
+        };
+        disk2: virtio@10040000 {
+            compatible = "virtio,mmio";
+            reg = <0x0 0x10040000 0x0 0x200>;
+            interrupt-parent = <&plic0>;
+            interrupts = <5>;
+        };
+        virtio_rng: virtio@10080000 {
+            compatible = "virtio,mmio";
+            reg = <0x0 0x10080000 0x0 0x200>;
+            interrupt-parent = <&plic0>;
+            interrupts = <6>;
+        };
+        my_memory: my_memory@20000000 {
+            reg = <0x00 0x20000000 0x00 0x1000>;
+        };
+    };
+    chosen {
+        bootargs = "console=ttyS0,115200 root=/dev/vda rw";
+        stdout-path = "/soc/serial@10000000";
+   };
+};
