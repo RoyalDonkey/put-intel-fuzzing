@@ -6,7 +6,7 @@
 #include <linux/kobject.h>
 #include <linux/sysfs.h>
 
-#define mem_dev_ADDR 0x20000000
+#define MEM_DEV_ADDR 0x20000000
 
 static void __iomem* io_reg = NULL;
 
@@ -97,7 +97,7 @@ static int __init my_init(void)
 		return -7;
 	}
 	
-	io_reg = ioremap(mem_dev_ADDR, 0x10);
+	io_reg = ioremap(MEM_DEV_ADDR, 0x1000);
 	
 	if (io_reg == NULL)
 	{
