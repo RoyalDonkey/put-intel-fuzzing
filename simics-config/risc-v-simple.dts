@@ -157,7 +157,9 @@
             interrupts = <6>;
         };
         my_memory: my_memory@20000000 {
+            compatible = "mem_dev,my_memory";
             reg = <0x00 0x20000000 0x00 0x1000>;
+            status = "open";
         };
     };
     chosen {
