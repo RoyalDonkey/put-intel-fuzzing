@@ -1,13 +1,19 @@
-1. Plik risc-v-simple.dts należy przekopiować do targetu w folderze:
-.../simics/simics-risc-v-simple-7.6.0/targets/risc-v-simple
+1. Modyfikacja Device Tree
+    a) Plik risc-v-simple.dts należy przekopiować do targetu w folderze:
+        .../simics/simics-risc-v-simple-7.6.0/targets/risc-v-simple
+        
+    b) Skompilować plik dts do dtb:
+        dtc -O dtb -o risc-v-simple.dtb risc-v-simple.dts
+    
+    c) Skompilować Kernel linux z modułem MEM_MODULE (patrz linux-driver/buildroot_external)
 
-Skompilować Kernel linux z modułem MEM_MODULE (patrz linux-driver/buildroot_external)
-
-2. Przekompilować .dtb
-dtc -O dtb -o risc-v-simple.dtb risc-v-simple.dts
-
-3. Zmapować urządzenie w simics:
-
-run-command-file "map_memory.simics"
-
-4. Teraz można uruchomić system
+2. SIMICS:
+    a) jeżeli uruchamiamy projekt pierwszy raz to, aby wygenerować szablon nowego urządzenia:
+        w katalogu z naszym projektem simics uruchamiamy komendę:
+            bin/project-setup --dml=mem_module && make
+            
+    b) uruchamiamy simics i tam:
+       simicsrun-command-file "map_memory.simics"
+        
+3. Teraz można uruchomić system w emulatorze:
+        run
