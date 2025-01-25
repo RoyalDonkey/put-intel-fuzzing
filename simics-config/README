@@ -1,7 +1,7 @@
 1. Plik risc-v-simple.dts należy przekopiować do targetu w folderze:
 .../simics/simics-risc-v-simple-7.6.0/targets/risc-v-simple
 
-Skompilować Kernel linux z modułem mem_module.c
+Skompilować Kernel linux z modułem MEM_MODULE (patrz linux-driver/buildroot_external)
 
 2. Przekompilować .dtb
 dtc -O dtb -o risc-v-simple.dtb risc-v-simple.dts
