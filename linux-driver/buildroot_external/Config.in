@@ -1,1 +1,1 @@
-source "$BR2_EXTERNAL_MEM_MOD_PATH/package/mem_module/Config.in"
+source "$BR2_EXTERNAL_SIMICS_SHM_PATH/package/simics_shm/Config.in"

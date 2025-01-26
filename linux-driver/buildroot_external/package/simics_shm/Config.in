@@ -1,0 +1,4 @@
+config BR2_PACKAGE_SIMICS_SHM
+        bool "simics_shm"
+        help
+		Simics shared memory module

@@ -1,4 +1,4 @@
-obj-m += mem_module.o
+obj-m += simics_shm.o
 
 .PHONY: all clean
 

@@ -1,1 +1,1 @@
-include $(sort $(wildcard $(BR2_EXTERNAL_MEM_MOD_PATH)/package/*/*.mk))
+include $(sort $(wildcard $(BR2_EXTERNAL_SIMICS_SHM_PATH)/package/*/*.mk))

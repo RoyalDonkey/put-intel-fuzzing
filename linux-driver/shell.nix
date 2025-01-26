@@ -7,7 +7,7 @@ in (pkgs.buildFHSEnv {
       gcc
       gnumake
       file
-      ncurses
+      ncurses ncurses.dev
       pkg-config
       dtc
     ];

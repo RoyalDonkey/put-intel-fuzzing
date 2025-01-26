@@ -156,8 +156,9 @@
             interrupt-parent = <&plic0>;
             interrupts = <6>;
         };
-        my_memory: my_memory@20000000 {
-            compatible = "mem_dev,my_memory";
+        simics_shm: simics_shm@20000000 {
+            compatible = "simics_shm";
+            device_type = "memory";
             reg = <0x00 0x20000000 0x00 0x1000>;
             status = "open";
         };

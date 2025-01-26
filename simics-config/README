@@ -5,12 +5,12 @@
     b) Skompilować plik dts do dtb:
         dtc -O dtb -o risc-v-simple.dtb risc-v-simple.dts
     
-    c) Skompilować Kernel linux z modułem MEM_MODULE (patrz linux-driver/buildroot_external)
+    c) Skompilować Kernel linux z modułem SIMICS_SHM (patrz linux-driver/buildroot_external)
 
 2. SIMICS:
     a) jeżeli uruchamiamy projekt pierwszy raz to, aby wygenerować szablon nowego urządzenia:
         w katalogu z naszym projektem simics uruchamiamy komendę:
-            bin/project-setup --dml=mem_module && make
+            bin/project-setup --dml=simics_shm && make
             
     b) uruchamiamy simics i tam:
        simicsrun-command-file "map_memory.simics"

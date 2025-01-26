@@ -1,4 +1,0 @@
-config BR2_PACKAGE_MEM_MODULE
-        bool "mem_module"
-        help
-		Mem module
