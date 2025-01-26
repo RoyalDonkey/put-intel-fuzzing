@@ -1,6 +1,7 @@
 #/bin/sh
 
 # Runs the bad program with preloaded libsan-overlay.
+# Note that this will obviously fail if /dev/simics_shm is not available.
 # https://github.com/google/sanitizers/wiki/AddressSanitizerFlags
 
 BAD_PROGRAM=bad
