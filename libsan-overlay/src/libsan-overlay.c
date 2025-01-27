@@ -11,7 +11,7 @@
 #define SIMICS_SHM_SIZE 0x1000
 
 /* An arbitrary number sent to Simics when it's supposed to read simics_shm. */
-#define MAGIC_NUMBER 28420
+#define MAGIC_NUMBER 28
 
 size_t libsan_strnlen(const char *s, size_t maxlen)
 {
