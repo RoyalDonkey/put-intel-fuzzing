@@ -1,38 +1,12 @@
-CC ?= cc
-LINKER ?= cc
-CFLAGS=-std=c99 -Wall -Wextra -pedantic -fsanitize=address -g -Og
-LDFLAGS=-fsanitize=address
+CC ?= riscv64-unknown-linux-gnu-gcc
+CFLAGS=-std=c99 -Wall -Wextra -pedantic -g -Og -static-libasan -fsanitize=address
 
-# All SRCDIR subdirectories that contain source files
-DIRS=.
+TARGET=bad.o
 
-SRCDIR=src
-OBJDIR=obj
-SRCDIRS:=$(foreach dir, $(DIRS), $(addprefix $(SRCDIR)/, $(dir)))
-OBJDIRS:=$(foreach dir, $(DIRS), $(addprefix $(OBJDIR)/, $(dir)))
-SRCS:=$(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.c))
-OBJS:=$(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRCS:.c=.o))
-TARGET=../bad
+.PHONY: all clean
 
-.PHONY: directories all main clean debug profile
-
-all: directories main
-
-directories:
-	mkdir -p $(SRCDIRS) $(OBJDIRS)
-
-main: $(OBJS)
-	$(LINKER) $(OBJS) $(LDFLAGS) -o $(TARGET)
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) -c $(CFLAGS) $^ -o $@
+all: src/bad.c
+	$(CC) -c $(CFLAGS) $^ -o $(TARGET)
 
 clean:
 	$(RM) -- $(OBJS) $(TARGET)
-
-debug: CFLAGS += -g -Og
-debug: clean all
-
-profile: CFLAGS += -pg
-profile: LDFLAGS += -pg
-profile: clean all

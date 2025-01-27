@@ -1,8 +1,9 @@
 { pkgs ? import <nixpkgs> {} }:
-pkgs.mkShell {
-  nativeBuildInputs = with pkgs; [
+pkgs.pkgsCross.riscv64.mkShell {
+  depsBuildBuild = with pkgs; [
     gcc
     gnumake
+    patchelf
 
     # LaTeX
     (texliveBasic.withPackages (ps: with ps; [
