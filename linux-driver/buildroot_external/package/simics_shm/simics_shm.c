@@ -27,7 +27,7 @@
 
 /* The physical memory region shared with Simics */
 #define SIMICS_SHM_ADDR 0x20000000
-#define SIMICS_SHM_SIZE 0x1000
+#define SIMICS_SHM_SIZE 0x4000
 
 struct my_device_data {
 	struct cdev cdev;
