@@ -136,7 +136,7 @@ static ssize_t my_read(struct file *file, char __user *buf, size_t count, loff_t
 		printk(KERN_ERR"simics_shm: Internal error (read_pos > write_pos)!\n");
 		return -EINVAL;
 	}
-	printk(KERN_INFO"simics_shm: Device read! (offset=%u)\n", offset);
+	printk(KERN_INFO"simics_shm: Device read! (offset=%lld)\n", *offset);
 	if (bytes_left == 0) {
 		dev_data[0].read_pos = 0;
 		return 0;
@@ -153,7 +153,7 @@ static ssize_t my_read(struct file *file, char __user *buf, size_t count, loff_t
 
 static ssize_t my_write(struct file *file, const char __user *buf, size_t count, loff_t *offset)
 {
-	printk(KERN_INFO"simics_shm: Device write! (count=%zu, offset=%u)\n", count, offset);
+	printk(KERN_INFO"simics_shm: Device write! (count=%zu, offset=%lld)\n", count, *offset);
 	if (dev_data[0].write_pos >= SIMICS_SHM_SIZE) {
 		printk(KERN_ERR"simics_shm: Internal error (write_pos >= SIMICS_SHM_SIZE)!\n");
 		return -EINVAL;
