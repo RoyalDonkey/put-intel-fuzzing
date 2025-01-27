@@ -116,7 +116,7 @@ static void my_driver_remove(struct platform_device *pdev)
 
 static int my_open(struct inode *inode, struct file *file)
 {
-	printk(KERN_ERR"simics_shm: Device open!\n");
+	printk(KERN_INFO"simics_shm: Device open!\n");
 	struct my_device_data *my_data = container_of(inode->i_cdev, struct my_device_data, cdev);
 	file->private_data = my_data;
 	dev_data[0].is_continuation = 0;
@@ -125,7 +125,7 @@ static int my_open(struct inode *inode, struct file *file)
 
 static int my_release(struct inode *inode, struct file *file)
 {
-	printk(KERN_ERR"simics_shm: Device close!\n");
+	printk(KERN_INFO"simics_shm: Device close!\n");
 	return 0;
 }
 
@@ -136,7 +136,7 @@ static ssize_t my_read(struct file *file, char __user *buf, size_t count, loff_t
 		printk(KERN_ERR"simics_shm: Internal error (read_pos > write_pos)!\n");
 		return -EINVAL;
 	}
-	printk(KERN_ERR"simics_shm: Device read! (offset=%u)\n", offset);
+	printk(KERN_INFO"simics_shm: Device read! (offset=%u)\n", offset);
 	if (bytes_left == 0) {
 		dev_data[0].read_pos = 0;
 		return 0;
@@ -153,27 +153,23 @@ static ssize_t my_read(struct file *file, char __user *buf, size_t count, loff_t
 
 static ssize_t my_write(struct file *file, const char __user *buf, size_t count, loff_t *offset)
 {
-	printk(KERN_ERR"simics_shm: Device write! (count=%zu, offset=%u)\n", count, offset);
+	printk(KERN_INFO"simics_shm: Device write! (count=%zu, offset=%u)\n", count, offset);
 	if (dev_data[0].write_pos >= SIMICS_SHM_SIZE) {
 		printk(KERN_ERR"simics_shm: Internal error (write_pos >= SIMICS_SHM_SIZE)!\n");
 		return -EINVAL;
 	}
-	printk(KERN_ERR"simics_shm: write bp1\n", count, offset);
 	if (!dev_data[0].is_continuation) {
 		/* Not a continuation; overwrite from the start of the buffer */
 		dev_data[0].write_pos = 0;
 		dev_data[0].read_pos = 0;
 	}
-	printk(KERN_ERR"simics_shm: write bp2\n", count, offset);
 	if (count > SIMICS_SHM_SIZE - dev_data[0].write_pos) {
 		printk(KERN_ERR"simics_shm: Out of memory (SIMICS_SHM_SIZE too small)!\n");
 		return -EINVAL;
 	}
-	printk(KERN_ERR"simics_shm: write bp3\n", count, offset);
 	if (copy_from_user(((char*)mapped_memory) + dev_data[0].write_pos, buf, count)) {
 		return -EFAULT;
 	}
-	printk(KERN_ERR"simics_shm: write bp4\n", count, offset);
 	dev_data[0].write_pos += count;
 	dev_data[0].is_continuation = 1;
 	return count;
@@ -181,14 +177,14 @@ static ssize_t my_write(struct file *file, const char __user *buf, size_t count,
 
 static int __init my_init(void)
 {
-	printk(KERN_ERR"simics_shm: Registering device driver!\n");
+	printk(KERN_INFO"simics_shm: Registering device driver!\n");
 	platform_device_register(&my_dev);
 	return platform_driver_register(&my_driver);
 }
 
 static void __exit my_exit(void)
 {
-	printk(KERN_ERR"simics_shm: Unregistering the driver!\n");
+	printk(KERN_INFO"simics_shm: Unregistering the driver!\n");
 	platform_driver_unregister(&my_driver);
 }
 
