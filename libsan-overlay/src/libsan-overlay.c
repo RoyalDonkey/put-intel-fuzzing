@@ -20,7 +20,7 @@ size_t libsan_strnlen(const char *s, size_t maxlen)
 	return i;
 }
 
-/* Original definition: https://github.com/llvm/llvm-project/blob/4dc34b0d660a52744164a37466ce245764126296/compiler-rt/lib/sanitizer_common/sanitizer_printf.cpp#L302 */
+/* Original declaration: https://github.com/llvm/llvm-project/blob/4dc34b0d660a52744164a37466ce245764126296/compiler-rt/lib/sanitizer_common/sanitizer_printf.cpp#L234 */
 void __sanitizer_on_print(const char *str)
 {
 	FILE *file;
