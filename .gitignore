@@ -5,3 +5,8 @@
 *.so
 bad
 main.pdf
+main.aux
+main.log
+main.synctex.gz
+main.toc
+kier_rozwoju.synctex.gz
