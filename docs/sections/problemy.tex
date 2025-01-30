@@ -17,7 +17,7 @@ rozwiązanie:
 
 \begin{enumerate}
 	\item Metoda jest uzależniona od mechanizmu systemu operacyjnego i nie
-		działałaby na bare metal.
+		działałaby na bare-metal.
 	\item Konieczne jest przeniesienie na platformę
 		\mintinline{sh}{libsan-overlay.so} wraz z programem testowym oraz
 		ustawienie \mintinline{sh}{LD_PRELOAD}, zatem potencjalnie musimy
@@ -66,7 +66,7 @@ instrukcje assemblera do skoku pod inny adres.
 
 Problem tych metod jest taki, że są bardzo mało uniwersalne, wymagają pisania
 kodu pod konkretną architekturę, przeważnie polegają na dynamicznym ładowaniu
-bibliotek (a zatem niekompatybilne z bare metal) i nie należą do łatwych w
+bibliotek (a zatem niekompatybilne z bare-metal) i nie należą do łatwych w
 implementacji. Dodatkowo mogłyby być blokowane przez zabezpieczenia sprzętowe
 typu NX bit.
 \end{document}

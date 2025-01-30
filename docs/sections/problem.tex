@@ -38,21 +38,21 @@ testowany program, system operacyjny musi znaleźć tę zależność.
 
 \paragraph{Problem}
 Istotą naszego zadania było znalezienie metody na przeprowadzenie fuzzingu
-programów na systemach wbudowanych bądź bare metal, wewnątrz emulatora Intel
-Simics. Testowanie w takich warunkach jest z wielu powodów trudniejsze. W
+programów na systemach wbudowanych bądź bare-metal, wewnątrz emulatora Intel
+SIMICS. Testowanie w takich warunkach jest z wielu powodów trudniejsze. W
 naszej pracy pomijamy element fuzzera i skupiamy się na sanitizerze.
 
-Na szczególną uwagę zasługuje bare metal, na którym jest zupełny brak systemu
+Na szczególną uwagę zasługuje bare-metal, na którym jest zupełny brak systemu
 operacyjnego, więc nie ma możliwości nawet podejrzenia komunikatów printowanych
-przez ASANa. Aby umożliwić testowanie ASANem na bare metal, konieczne jest
-utworzenie kanału komunikacji między nim a Simicsem, tj. chcemy, aby każda
+przez ASANa. Aby umożliwić testowanie ASANem na bare-metal, konieczne jest
+utworzenie kanału komunikacji między nim a SIMICSem, tj. chcemy, aby każda
 wiadomość od ASANa, która klasycznie wylądowałaby na standardowym wyjściu
-programu, była dostępna jako string w skrypcie Simicsowym. Brzmi to
+programu, była dostępna jako string w skrypcie SIMICSowym. Brzmi to
 abstrakcyjnie, bo takie jest. Zasadniczo, to jest największy problem projektu i
 cała nasza praca głównie sprowadziła się do tego zadania.
 
 \paragraph{Dodatkowe założenia}
 Dla uproszczenia, całą pracę wykonaliśmy w środowisku Linux na RISC-V (64-bit).
-Dołożyliśmy starań, aby nasze rozwiązanie było kompatybilne z ideą bare metal,
+Dołożyliśmy starań, aby nasze rozwiązanie było kompatybilne z ideą bare-metal,
 ale byliśmy zbyt ograniczeni czasowo, aby przeprowadzić na nim testy.
 \end{document}
