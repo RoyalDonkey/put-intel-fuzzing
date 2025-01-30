@@ -9,6 +9,9 @@ Linux and bare-metal targets should both be compatible with this approach,
 although this demo only shows how to do it with Linux running on a RISC-V 64-bit
 target.
 
+For more information, see
+[docs/dokumentacja.pdf](https://github.com/RoyalDonkey/put-intel-fuzzing/blob/master/docs/dokumentacja.pdf).
+
 ## Requirements
 
 - RISC-V 64 toolchain (`riscv64-unknown-linux-gnu-*` utilities)
