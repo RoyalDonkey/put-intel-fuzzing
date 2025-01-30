@@ -1,0 +1,33 @@
+\def\UseMinted{}
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\section{Autorzy}
+
+\begin{description}
+	\item [Piotr Kaszubski] --
+		Lider zespołu, organizacja repozytorium, przydzielanie zadań,
+		zgłębianie teorii fuzzowania, dokumentacji ASANa i Simicsa, znalezienie
+		funkcji \mintinline{c}{__sanitizer_on_print()} i pierwsza implementacja
+		mechanizmu \mintinline{c}{LD_PRELOAD}, eksperymenty z linkowaniem
+		statycznym, pomysł i implementacja ostatecznej metody z łączeniem
+		plików obiektowych, poprawki do tworzenia regionu pamięci w Simicsie,
+		modyfikacje sterownika dla urządzenia znakowego, kompilacja skrośna na
+		RISC-V, finalna wersja \mintinline{c}{__sanitizer_on_print()},
+		eksperymenty z \mintinline{sh}{-static-libasan} w GCC, napisanie MAGIC
+		hooka do Simicsa, przeprowadzenie demo i prezentacji, dokumentacja.
+	\item [Tomasz Jaworski] --
+		Tworzenie notatek z cotygodniowych spotkań, zaznajamianie się z
+		dokumentacją Simics, stworzenie buforu pośredniczącego pomiędzy
+		emulowanym systemem a emulatorem (przygotowanie sterownika dla
+		urządzenia znakowego i modyfikacja device tree), dokumentacja.
+	\item [Karol Kiedrowski] --
+		Zebranie informacji dotyczących działania sanitizera, przetestowanie
+		jego działania, a także napisanie wstępnej logiki funkcji
+		\mintinline{c}{__sanitizer_on_print()}.
+	\item [Mikołaj Załęski] --
+		Pierwsze badania nad przechwyceniem wyjścia z biblioteki ASAN, pomysł
+		na mechanizm \mintinline{c}{LD_PRELOAD}.
+\end{description}
+\end{document}
