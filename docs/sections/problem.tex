@@ -1,9 +1,53 @@
 \def\UseMinted{}
 \documentclass[../main.tex]{subfiles}
 \begin{document}
-	
-	
-\section{Opis problemu}
-TODO
 
+\section{Opis problemu}
+\paragraph{Fuzzing}
+Problem dotyczył fuzzingu, czyli metody testowania oprogramowania polegającej
+na celowym generowaniu niepoprawnych, lub pół-poprawnych danych wejściowych
+przez osobny program (tzw. fuzzer). Tak wygenerowane dane są następnie podawane
+do testowanego programu, w celu sprowokowania nieprawidłowego działania.
+Fuzzery są w zasadzie programami szukającym nowych danych do korpusu testowego.
+
+Fuzzing jest gorącym tematem, który rozwija się prężnie od kilku dekad. Obecnie
+większość projektów i firm dużej skali takich jak jądro Linux, Microsoft,
+Google, etc. stosuje  fuzzing z wielkim powodzeniem, ponieważ te narzędzia
+wykrywają błędy, które bardzo trudno jest zauważyć gołym okiem lub przy użyciu
+tradycyjnych metod takich jak testy jednostkowe.
+
+\paragraph{Sanitizery}
+Aby fuzzing był skuteczny do wdrożenia na dużą skalę, potrzebne są narzędzia do
+analizy poprawności stanu testowanego programu, aby umożliwić automatyczne
+wykrycie, kiedy fuzzer znalazł podatność. Jedną z klas takich narzędzi są
+sanitizery pamięci. Na potrzeby tego projektu istotny jest jeden konkretny
+sanitizer, czyli ASAN.
+
+ASAN monitoruje stan pamięci testowanego programu w trakcie jego wykonywania i
+natychmiast zawiadamia o błędach (np. przepełnienie bufora), jeśli takowe
+wystąpią. Taka analiza jest możliwa, ponieważ instrukcje ASANa są bezpośrednio
+wkompilowane w testowany program (tak zwana “instrumentalizacja” programu).
+Testowany program funkcjonalnie pozostaje niezmieniony, ale na każdym kroku ma
+wbudowane dodatkowe sprawdzenia odczytów, zapisów, alokacji i zwalniania
+pamięci.
+
+ASAN jest w sporej części po prostu biblioteką napisaną w C (libasan.so -- na
+systemach Linux). W kompilatorze GCC, po instrumentalizacji testowanego
+programu, jest on zlinkowany dynamicznie z tą biblioteką. Zatem, aby uruchomić
+testowany program, system operacyjny musi znaleźć tę zależność.
+
+\paragraph{Problem}
+Istotą naszego zadania było znalezienie metody na przeprowadzenie fuzzingu
+programów na systemach wbudowanych bądź bare metal, wewnątrz emulatora Intel
+Simics. Testowanie w takich warunkach jest z wielu powodów trudniejsze. W
+naszej pracy pomijamy element fuzzera i skupiamy się na sanitizerze.
+
+Na szczególną uwagę zasługuje bare metal, na którym jest zupełny brak systemu
+operacyjnego, więc nie ma możliwości nawet podejrzenia komunikatów printowanych
+przez ASANa. Aby umożliwić testowanie ASANem na bare metal, konieczne jest
+utworzenie kanału komunikacji między nim a Simicsem, tj. chcemy, aby każda
+wiadomość od ASANa, która klasycznie wylądowałaby na standardowym wyjściu
+programu, była dostępna jako string w skrypcie Simicsowym. Brzmi to
+abstrakcyjnie, bo takie jest. Zasadniczo, to jest największy problem projektu i
+cała nasza praca głównie sprowadziła się do tego zadania.
 \end{document}
