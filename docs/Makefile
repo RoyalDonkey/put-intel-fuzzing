@@ -5,10 +5,13 @@ OUT := dokumentacja
 all: clean
 	mkdir -p -- $(BUILD_DIR)
 	@echo
-	@echo '*** COMPILING [1/2] ***'
+	@echo '*** COMPILING [1/3] ***'
 	xelatex -interaction batchmode -8bit -shell-escape -output-directory $(BUILD_DIR) -jobname $(OUT) -- $(MAIN_TEX) || true
 	@echo
-	@echo '*** COMPILING [2/2] ***'
+	@echo '*** COMPILING [2/3] ***'
+	xelatex -interaction batchmode -8bit -shell-escape -output-directory $(BUILD_DIR) -jobname $(OUT) -- $(MAIN_TEX) || true
+	@echo
+	@echo '*** COMPILING [3/3] ***'
 	xelatex -interaction batchmode -8bit -shell-escape -output-directory $(BUILD_DIR) -jobname $(OUT) -- $(MAIN_TEX) || true
 	cp -- $(BUILD_DIR)/$(OUT).pdf .
 	@echo
