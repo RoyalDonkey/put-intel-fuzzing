@@ -1,10 +1,72 @@
 \def\UseMinted{}
 \documentclass[../main.tex]{subfiles}
 \begin{document}
-	
-	
-\section{Napotakane problemy}
 
-TODO
+\section{Napotkane problemy}
+\subsection{Wczesne podejście z LD\_PRELOAD}
+Pierwszym pomysłem na nadpisanie funkcji \mintinline{c}{__sanitizer_on_print()}
+było napisanie dynamicznej biblioteki definiującej tę funkcje, a następnie
+wywołanie testowanego programu ze zmienną
+\mintinline{sh}{LD_PRELOAD=libsan-overlay.so}.
 
+Ta metoda działa i jej największą zaletą jest to, że z
+\mintinline{sh}{LD_PRELOAD}, tak długo jak mamy program zlinkowany dynamicznie
+z \mintinline{sh}{libasan.so}, nie potrzebujemy dostępu ani do żadnych źródeł
+ani plików obiektowych. Niestety, są też wady, które dyskwalifikują to
+rozwiązanie:
+
+\begin{enumerate}
+	\item Metoda jest uzależniona od mechanizmu systemu operacyjnego i nie
+		działałaby na bare metal.
+	\item Konieczne jest przeniesienie na platformę
+		\mintinline{sh}{libsan-overlay.so} wraz z programem testowym oraz
+		ustawienie \mintinline{sh}{LD_PRELOAD}, zatem potencjalnie musimy
+		ingerować w skrypty uruchamiające program.
+	\item Metoda polega na dostępności \mintinline{sh}{libasan.so} na
+		platformie. Na okrojonych instalacjach Linux, ta biblioteka
+		najprawdopodobniej nie będzie istnieć, zatem pojawia się konieczność
+		dostarczenia jej wraz z programem. Jest to szczególnie uciążliwe, jeśli
+		platforma stoi na nietypowej architekturze, bo trzeba znaleźć
+		odpowiednią wersję \mintinline{sh}{libasan.so} i mieć nadzieję, że nie
+		będzie żadnych niekompatybilności między nią a dynamicznie zlinkowanym
+		programem testowym (co nie jest oczywiste np. w przypadku różnic w
+		wersjach kompilatora).
+\end{enumerate}
+
+\subsection{Nadpisanie funkcji ze statycznie linkowanej biblioteki}
+Zanim wpadliśmy na pomysł połączenia dwóch plików obiektowych w jeden przed
+linkowaniem, rozważaliśmy sposoby na nadpisanie funkcji \textbf{po} linkowaniu.
+
+W grę wchodzą dwa fundamentalne podejścia: modyfikacja funkcji wewnątrz pliku
+binarnego (przyjmijmy ELF), lub nadpisanie adresu funkcji w trakcie wykonania
+programu (tzw. "trampolina").
+
+\subsubsection{Modyfikacja ELF}
+W teorii, posiadając skompilowany plik binarny który nie został strip'owany,
+powinno być możliwe znalezienie miejsca, gdzie zapisane są instrukcje \\
+\mintinline{c}{__sanitizer_on_print()} i podmiana ich na własną definicję. W
+praktyce, nie znaleźliśmy narzędzi, które w łatwy sposób umożliwiałyby
+zrobienie czegoś takiego. Co więcej, nawet gdyby takie narzędzie istniało,
+zapewne byłoby bardzo specyficzne dla danej architektury lub formatu ELF i nie
+byłoby dostatecznie uniwersalne, aby umożliwić testowanie na wielu różnych
+platformach.
+
+\subsubsection{Trampolina}
+Nie ingerując w plik binarny, można rozważyć podejście dynamiczne: załadowanie
+do pamięci własnej implementacji \mintinline{c}{__sanitizer_on_print()}, a
+następnie sprytna podmiana wszystkich skoków pamięci do oryginalnej wersji na
+nasz własny adres.
+
+Takie metody się stosuje i można znaleźć nawet przykłady w internecie.
+Przeważnie polegają na napisaniu biblioteki dynamicznej z funkcją inicjalizacji
+(w GCC \mintinline{c}{__attribute__((constructor))}), która wykorzystuje
+\mintinline{c}{dlopen()} i \mintinline{c}{dlsym()} aby znaleźć adres funkcji,
+którą chcemy podmienić, a następnie wpisuje w odpowiednie miejsca (w pamięci)
+instrukcje assemblera do skoku pod inny adres.
+
+Problem tych metod jest taki, że są bardzo mało uniwersalne, wymagają pisania
+kodu pod konkretną architekturę, przeważnie polegają na dynamicznym ładowaniu
+bibliotek (a zatem niekompatybilne z bare metal) i nie należą do łatwych w
+implementacji. Dodatkowo mogłyby być blokowane przez zabezpieczenia sprzętowe
+typu NX bit.
 \end{document}
