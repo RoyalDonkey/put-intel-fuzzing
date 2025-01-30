@@ -1,5 +1,5 @@
-\contentsline {section}{\numberline {1}Opis problemu}{2}{section.1}%
-\contentsline {section}{\numberline {2}Autorzy}{2}{section.2}%
+\contentsline {section}{\numberline {1}Opis problemu}{1}{section.1}%
+\contentsline {section}{\numberline {2}Autorzy}{1}{section.2}%
 \contentsline {section}{\numberline {3}Rozwiązanie}{2}{section.3}%
-\contentsline {section}{\numberline {4}Napotakane problemy}{3}{section.4}%
-\contentsline {section}{\numberline {5}Kierunki Rozwoju}{3}{section.5}%
+\contentsline {section}{\numberline {4}Napotakane problemy}{2}{section.4}%
+\contentsline {section}{\numberline {5}Kierunki Rozwoju}{2}{section.5}%
