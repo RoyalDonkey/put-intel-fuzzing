@@ -14,6 +14,7 @@
 
     b) uruchamiamy simics i tam:
        run-script "map_memory.simics"
+       run-script "magic-hook.py"
 
 3. Teraz można uruchomić system w emulatorze:
         run
