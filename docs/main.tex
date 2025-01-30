@@ -1,6 +1,7 @@
 \documentclass[14pt]{article}
 
 % Basic packages
+\usepackage{subfiles}
 \usepackage{extsizes}
 \usepackage[quiet]{fontspec}
 \usepackage{unicode-math}
@@ -15,14 +16,9 @@
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{subcaption}
-\usepackage{minted}
-
 % Font config
 \defaultfontfeatures{Scale=MatchUppercase}
-\setmainfont{Libertinus Serif}
-\setsansfont{Carlito}
-\setmonofont{DejaVu Sans Mono}
-\setmathfont{Libertinus Math}
+
 \setul{1pt}{.4pt}
 
 % Page layout config
@@ -55,7 +51,10 @@
 \begin{document}
 \maketitle
 \tableofcontents
-\section{Cel projektu}
-Intel Simics to emulator oprogramowania przeznaczonego do systemów wbudowanych.
-% TODO
+
+\subfile{sections/problem.tex}
+\subfile{sections/autors.tex}
+\subfile{sections/rozwiazanie.tex}
+\subfile{sections/problemy.tex}
+\subfile{sections/kier_rozwoju.tex}
 \end{document}
